@@ -134,9 +134,12 @@ class TestActiveSupport < Test::Unit::TestCase
           assert_equal 0, @mc.increment('counterX')
           assert_equal nil, @mc.read('counterX')
 
-          assert_equal 1, @dalli.increment('counterX')
-          assert_equal 2, @dalli.increment('counterX')
-          assert_equal 2, @dalli.read('counterX', :raw => true).to_i
+          assert_nil @dalli.increment('counterX')
+          assert_nil @dalli.increment('counterX')
+          assert_equal nil, @mc.read('counterX')
+
+          assert_equal 1, @dalli.increment('counter0', 1, :initial => 1)
+          assert_equal 5, @dalli.increment('counter5', 1, :initial => 5)
         end
       end
     end
