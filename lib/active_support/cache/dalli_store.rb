@@ -70,7 +70,7 @@ module ActiveSupport
       # memcached counters cannot hold negative values.
       def increment(name, amount = 1, options = nil) # :nodoc:
         options = merged_options(options)
-        initial = options[:initial] || amount
+        initial = options.has_key?(:initial) ? options[:initial] : amount
         expires_in = options[:expires_in].to_i
         response = instrument(:increment, name, :amount => amount) do
           @data.incr(escape_key(namespaced_key(name, options)), amount, expires_in, initial)

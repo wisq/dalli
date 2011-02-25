@@ -137,6 +137,11 @@ class TestActiveSupport < Test::Unit::TestCase
           assert_equal 1, @dalli.increment('counterX')
           assert_equal 2, @dalli.increment('counterX')
           assert_equal 2, @dalli.read('counterX', :raw => true).to_i
+
+          assert_equal 5, @dalli.increment('initial5', 1, :initial => 5)
+          assert_equal 0, @dalli.increment('initial0', 1, :initial => 0)
+          assert_nil @dalli.increment('initial_nil', 1, :initial => nil)
+          assert_nil @dalli.read('initial_nil', :raw => true)
         end
       end
     end
